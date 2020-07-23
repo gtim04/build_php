@@ -28,6 +28,8 @@ make clean
 make dclean
 
 #config optional depends on what you need see openssl build documentation
+#./config --prefix=`pwd`/local --openssldir=/usr/lib/ssl enable-ssl2 enable-ssl3 enable-ssl2-method enable-ssl3-method no-shared
+#./config -fPIC shared --prefix=/home/$usr/build enable-ssl2 enable-ssl3 enable-ssl2-method enable-ssl3-method
 ./config --prefix=/home/$usr/build enable-ssl3 enable-ssl3-method no-shared
 make -j$(nproc)
 make -i install
@@ -75,7 +77,7 @@ make -j$(nproc) -B
 make -i install #might need sudo
 
 #check if your custom php is working with you custom curl and openssl
-php -a
+/opt/$php_version/bin/php -a
 var_dump(curl_version());
 #should print ur custom curl version with your openssl
 exit
