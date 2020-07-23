@@ -29,8 +29,8 @@ make dclean
 
 #config optional depends on what you need see openssl build documentation
 #./config --prefix=`pwd`/local --openssldir=/usr/lib/ssl enable-ssl2 enable-ssl3 enable-ssl2-method enable-ssl3-method no-shared
-#./config -fPIC shared --prefix=/home/$usr/build enable-ssl2 enable-ssl3 enable-ssl2-method enable-ssl3-method
-./config --prefix=/home/$usr/build enable-ssl3 enable-ssl3-method no-shared
+./config -fPIC shared --prefix=/home/$usr/build enable-ssl2 enable-ssl3 enable-ssl2-method enable-ssl3-method
+#./config --prefix=/home/$usr/build enable-ssl3 enable-ssl3-method no-shared
 make -j$(nproc)
 make -i install
 
@@ -43,6 +43,12 @@ cd ~/build/bin
 cd ~/src
 tar -xvf curl-$curl_version.tar.gz
 cd curl-$curl_version
+
+#optional clean build
+make clean
+make dclean
+
+./buildconf
 env PKG_CONFIG_PATH=/home/$usr/build/lib/pkgconfig ./configure --with-ssl --prefix=/home/$usr/build
 make -j$(nproc)
 make -i install
@@ -56,7 +62,10 @@ cd ~/build/bin
 cd ~
 wget https://www.php.net/distributions/$php_version.tar.gz
 tar -xvf php-$php_version.tar.gz
-./configure --prefix=/opt/$php_version --with-config-file-path=/opt/$php_version/etc --with-curl=/home/$usr/build --with-openssl-dir=/home/$usr/build --with-pdo-mysql --with-mysqli --with-libdir=lib64
+cd php-$php_version
+./buildconf --force
+#use force if you are using release versions of php
+./configure --prefix=/opt/$php_version --with-config-file-path=/opt/$php_version/etc --with-curl=/home/$usr/build --with-openssl-dir=/home/$usr/build --with-openssl=shared --with-pdo-mysql --with-mysqli --with-libdir=lib64
 #added next line on the configure to present the command better
 #./configure \
 #> --prefix=/opt/$php_version \
@@ -72,9 +81,9 @@ tar -xvf php-$php_version.tar.gz
 #> --with-libdir=lib64 \ 
 #Use if on 64 bit OS. Include softlink to lib directory
 #check php manual to see additional configurations
-make clean
 make -j$(nproc) -B
 make -i install #might need sudo
+make clean
 
 #check if your custom php is working with you custom curl and openssl
 /opt/$php_version/bin/php -a
