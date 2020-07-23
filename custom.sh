@@ -54,7 +54,7 @@ cd ~/build/bin
 cd ~
 wget https://www.php.net/distributions/$php_version.tar.gz
 tar -xvf php-$php_version.tar.gz
-./configure --prefix=/opt/$php_version --with-config-file-path=/opt/$php_version/etc --with-curl=/home/$usr/build --with-openssl-dir=/home/$usr/build --with-pdo-mysql --with-libdir=lib64
+./configure --prefix=/opt/$php_version --with-config-file-path=/opt/$php_version/etc --with-curl=/home/$usr/build --with-openssl-dir=/home/$usr/build --with-pdo-mysql --with-mysqli --with-libdir=lib64
 #added next line on the configure to present the command better
 #./configure \
 #> --prefix=/opt/$php_version \
@@ -72,7 +72,7 @@ tar -xvf php-$php_version.tar.gz
 #check php manual to see additional configurations
 make clean
 make -j$(nproc) -B
-make -i install
+make -i install #might need sudo
 
 #check if your custom php is working with you custom curl and openssl
 php -a
