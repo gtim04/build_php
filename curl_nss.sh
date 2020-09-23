@@ -4,6 +4,7 @@
 
 #Install build dependencies ubuntu
 
+sudo apt -y install libnspr4*
 sudo apt -y install libnss3*
 sudo apt -y install libnsspem
 sudo apt -y install build-essential
@@ -17,7 +18,7 @@ cd curl-$curl_version
 
 #build process
 ./buildconf
-./configure --prefix=/home/$usr/build --without-ssl --with-nss
+CPPFLAGS="-I/path/to/nspr/include" ./configure --prefix=/home/$usr/build --without-ssl --with-nss
 make -j$(nproc)
 make -i install
 
