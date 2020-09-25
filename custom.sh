@@ -65,7 +65,7 @@ tar -xvf php-$php_version.tar.gz
 cd php-$php_version
 ./buildconf --force
 #use force if you are using release versions of php
-./configure --prefix=/opt/$php_version --with-config-file-path=/opt/$php_version/etc --with-curl=/home/$usr/build --with-openssl-dir=/home/$usr/build --with-openssl=shared --with-pdo-mysql --with-mysqli --with-libdir=lib64
+./configure --prefix=/opt/$php_version --with-config-file-path=/opt/$php_version/etc --with-curl=/home/$usr/build --with-openssl-dir=/home/$usr/build/bin --with-openssl --with-pdo-mysql --with-mysqli --with-libdir=lib64
 #added next line on the configure to present the command better
 #./configure \
 #> --prefix=/opt/$php_version \
